@@ -2,7 +2,7 @@
   "name": "vipul-sharma-personal-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vipulksharma-github-io-vipulksharma.vercel.app",
+  "homepage": "https://vipul-sharma.in",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
