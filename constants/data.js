@@ -2,7 +2,7 @@ const userData = {
   githubUsername: "vipulksharma",
   name: "Vipul Sharma",
   designation: "Frontend Architect",
-  avatarUrl: "/avatar.jpeg",
+  avatarUrl: "/avatar.png",
   email: "panditsfire@gmail.com",
   phone: "+91 9015713889",
   address: "Noida, UP, India.",
