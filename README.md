@@ -1,1 +1,1 @@
-Full stack developer
+Full stack developer and a traveller
