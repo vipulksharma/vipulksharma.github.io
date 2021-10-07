@@ -1,7 +1,7 @@
 import ReactPlayer from 'react-player';
 import React, { Component } from 'react';
 
-export default class Product extends Component {
+export default class ReactPlayerDemo extends Component {
 
     state = {
         pip: false,
