@@ -11,15 +11,7 @@ export default class Product extends Component {
 
     getMobileOperatingSystem = () => {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            return 'iOS';
-        }
-        if (/android/i.test(userAgent)) {
-            return 'Android';
-        }
-        return 'unknown';
-
+        return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream ? "iOS" : /android/i.test(userAgent) ? "Android" : "unknown"
     }
 
     handleEnablePIP = () => {
@@ -44,19 +36,30 @@ export default class Product extends Component {
         if (!this.state.login) {
             // Logic to call login 
             // enable pip
-            if (this.getMobileOperatingSystem() === 'iOS') {
+            if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.setState({
                     pip: true
                 })
-            } else if (this.getMobileOperatingSystem() === 'Android'){
-                //call android bridge to enable pip
-                if (window["JSBridge"]) {
-                    window["JSBridge"].ticketEnablePIP(true);
-                }else {
-                    alert('bridge not found');
-                }
             } else {
-                this.handleTogglePIP();
+                if (this.getMobileOperatingSystem() === 'iOS') {
+                    this.setState({
+                        pip: true
+                    })
+                } else if (this.getMobileOperatingSystem() === 'Android'){
+                    //call android bridge to enable pip
+                    if (window["JSBridge"]) {
+                        window["JSBridge"].ticketEnablePIP(true);
+                    }else {
+                        alert('bridge not found');
+                    }
+                } else {
+                    this.handleTogglePIP();
+                }
+            }
+            
+            //call login
+            if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
+                window.location.href = 'https://m.tiket.com/login';
             }
             window.addEventListener('message', (event) => {
                 alert(`Received message: ${event.data}`);
@@ -83,10 +86,9 @@ export default class Product extends Component {
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
             stopOnUnmount={false} />
-        {ReactPlayer.canEnablePIP(url) && 
         <button onClick={this.checkLogin}>{
             pip ? 'Disable PIP' : 'Enable PIP'
-        }</button>}
+        }</button>
       </div>
     )
   }
