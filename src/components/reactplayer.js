@@ -5,7 +5,7 @@ export default class Product extends Component {
 
     state = {
         pip: false,
-        url: "",
+        url: "https://dawchihliou.github.io/react-use-pip/video-sample.mp4",
         login: false,
     } 
 
@@ -48,10 +48,9 @@ export default class Product extends Component {
 
     checkLogin = () => {
         if (!this.state.login) {
-            if (ReactPlayer.canEnablePIP('https://dawchihliou.github.io/react-use-pip/video-sample.mp4')) {
+            if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.handleTogglePIP();
             } else {
-                alert('pip is not enabled');
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
                     if (window["app"]) {
@@ -86,9 +85,10 @@ export default class Product extends Component {
     return(
       <div className="wrapper">
         <ReactPlayer 
-            url='https://dawchihliou.github.io/react-use-pip/video-sample.mp4' 
-            playing 
-            pip={pip} 
+            url={url} 
+            playing={!!url} 
+            playsinline={!!true}
+            pip={!!pip} 
             loop={true}
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
