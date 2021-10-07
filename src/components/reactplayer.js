@@ -42,7 +42,7 @@ export default class Product extends Component {
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
                     if (window["JSBridge"]) {
-                        window["JSBridge"].ticketEnablePIP(true);
+                        window["JSBridge"].tiketTogglePIP(true);
                     }else {
                         alert('bridge not found');
                     }
