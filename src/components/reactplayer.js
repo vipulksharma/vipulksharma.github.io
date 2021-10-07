@@ -5,7 +5,7 @@ export default class Product extends Component {
 
     state = {
         pip: false,
-        url: "https://dawchihliou.github.io/react-use-pip/video-sample.mp4",
+        url: "",
         login: false,
     } 
 
@@ -18,7 +18,7 @@ export default class Product extends Component {
              
         if (ios && !standalone && !safari) {
             return 'iOS';
-        } else if (/android/i.test(userAgent)) {
+        } else if (/android/i.test(userAgent) && isAndroidWebView) {
             return 'Android';
         } else {
             return 'unknown';
@@ -48,18 +48,18 @@ export default class Product extends Component {
 
     checkLogin = () => {
         if (!this.state.login) {
-            
-            if (ReactPlayer.canEnablePIP(this.state.url)) {
+            if (ReactPlayer.canEnablePIP('https://dawchihliou.github.io/react-use-pip/video-sample.mp4')) {
                 this.handleTogglePIP();
             } else {
+                alert('pip is not enabled');
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
-                    if (window.JSBridge) {
-                        window.JSBridge.tiketTogglePIP(true);
+                    if (window["app"]) {
+                        window["app"].tiketTogglePIP(true);
                         // window["JSBridge"].call('ticketTogglePIP', {enablePIP: true}, function(e) {
                         //     console.log(e);
                         // })
-                    }else {
+                    } else {
                         alert('bridge not found');
                     }
                 } else {
@@ -86,11 +86,10 @@ export default class Product extends Component {
     return(
       <div className="wrapper">
         <ReactPlayer 
-            url={url} 
+            url='https://dawchihliou.github.io/react-use-pip/video-sample.mp4' 
             playing 
             pip={pip} 
             loop={true}
-            playsinline={true} 
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
             stopOnUnmount={false} />
