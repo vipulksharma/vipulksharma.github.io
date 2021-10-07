@@ -18,7 +18,7 @@ export default class ReactPlayerDemo extends Component {
              
         if (ios && !standalone && !safari) {
             return 'iOS';
-        } else if (/android/i.test(userAgent)) {
+        } else if (/android/i.test(userAgent) && isAndroidWebView) {
             return 'Android';
         } else {
             return 'unknown';
