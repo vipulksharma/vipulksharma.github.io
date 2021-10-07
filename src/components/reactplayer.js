@@ -43,15 +43,22 @@ export default class Product extends Component {
         })
     }
 
+    // On back button press or home button press in app toggle pip
+
+
     checkLogin = () => {
         if (!this.state.login) {
+            
             if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.handleTogglePIP();
             } else {
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
-                    if (window["JSBridge"]) {
-                        window["JSBridge"].tiketTogglePIP(true);
+                    if (window.JSBridge) {
+                        window.JSBridge.tiketTogglePIP(true);
+                        // window["JSBridge"].call('ticketTogglePIP', {enablePIP: true}, function(e) {
+                        //     console.log(e);
+                        // })
                     }else {
                         alert('bridge not found');
                     }
@@ -59,8 +66,6 @@ export default class Product extends Component {
                     this.handleTogglePIP();
                 }
             }
-            
-            
             if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
                 window.location.href = 'https://m.tiket.com/login';
                 // App to intercept this call and check login and get login done and return event which we use to fetch username.
@@ -71,8 +76,6 @@ export default class Product extends Component {
             //     // based on event data from app call login api to get user details.
             //     this.handleDisablePIP();
             // });            
-        } else if (this.getMobileOperatingSystem() === 'unknown'){
-            this.handleTogglePIP();
         }
     }
 
