@@ -65,12 +65,12 @@ export default class Product extends Component {
                 window.location.href = 'https://m.tiket.com/login';
                 // App to intercept this call and check login and get login done and return event which we use to fetch username.
             }
-            // window.addEventListener('message', (event) => {
-            //     alert(`Received message: ${event.data}`);
-            //     // if logged in
-            //     // based on event data from app call login api to get user details.
-            //     this.handleDisablePIP();
-            // });            
+            window.addEventListener('TL_SET_TOKEN', (event) => {
+                alert(`Received message: ${event.data}`);
+                // if logged in
+                // based on event data from app call login api to get user details.
+                this.handleDisablePIP();
+            });            
         } else if (this.getMobileOperatingSystem() === 'unknown'){
             this.handleTogglePIP();
         }
@@ -84,13 +84,18 @@ export default class Product extends Component {
       <div className="wrapper">
         <ReactPlayer 
             url={url} 
-            pip={pip} 
-            playing 
-            loop={true}
-            playsinline={true} 
+            pip={!!pip} 
+            playing
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
-            stopOnUnmount={false} />
+            stopOnUnmount={false} 
+            playsinline={true}
+            config={{
+                file: {
+                  // NOTE: Forcing HLS makes the stream to not work on iOS devices.
+                  // forceHLS: true,
+                  forceVideo: true,}}}
+                  />
         <button onClick={this.checkLogin}>{
             pip ? 'Disable PIP' : 'Enable PIP'
         }</button>
