@@ -10,8 +10,19 @@ export default class Product extends Component {
     } 
 
     getMobileOperatingSystem = () => {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream ? "iOS" : /android/i.test(userAgent) ? "Android" : "unknown"
+        let standalone = window.navigator.standalone,
+            userAgent = window.navigator.userAgent.toLowerCase() || navigator.vendor.toLowerCase(),
+            safari = /safari/.test( userAgent ),
+            ios = /iphone|ipod|ipad/.test( userAgent ),
+            isAndroidWebView = window.hasOwnProperty('Android');
+             
+        if (ios && !standalone && !safari) {
+            return 'iOS';
+        } else if (/android/i.test(userAgent) && isAndroidWebView) {
+            return 'Android';
+        } else {
+            return 'unknown';
+        }
     }
 
     handleEnablePIP = () => {
@@ -35,9 +46,7 @@ export default class Product extends Component {
     checkLogin = () => {
         if (!this.state.login) {
             if (ReactPlayer.canEnablePIP(this.state.url)) {
-                this.setState({
-                    pip: true
-                })
+                this.handleTogglePIP();
             } else {
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
@@ -51,16 +60,16 @@ export default class Product extends Component {
                 }
             }
             
-            //call login
+            
             if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
                 window.location.href = 'https://m.tiket.com/login';
             }
-            window.addEventListener('message', (event) => {
-                alert(`Received message: ${event.data}`);
-                // if logged in
-                // based on event data from app call login api to get user details.
-                this.handleDisablePIP();
-            });            
+            // window.addEventListener('message', (event) => {
+            //     alert(`Received message: ${event.data}`);
+            //     // if logged in
+            //     // based on event data from app call login api to get user details.
+            //     this.handleDisablePIP();
+            // });            
         } else if (this.getMobileOperatingSystem() === 'unknown'){
             this.handleTogglePIP();
         }
