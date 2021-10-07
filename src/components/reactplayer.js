@@ -84,8 +84,9 @@ export default class Product extends Component {
       <div className="wrapper">
         <ReactPlayer 
             url={url} 
-            pip={pip} 
             playing 
+            pip={pip} 
+            loop={true}
             playsinline={true} 
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
