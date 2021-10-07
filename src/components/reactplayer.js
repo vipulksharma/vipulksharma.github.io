@@ -34,18 +34,12 @@ export default class Product extends Component {
 
     checkLogin = () => {
         if (!this.state.login) {
-            // Logic to call login 
-            // enable pip
             if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.setState({
                     pip: true
                 })
             } else {
-                if (this.getMobileOperatingSystem() === 'iOS') {
-                    this.setState({
-                        pip: true
-                    })
-                } else if (this.getMobileOperatingSystem() === 'Android'){
+                if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
                     if (window["JSBridge"]) {
                         window["JSBridge"].ticketEnablePIP(true);
