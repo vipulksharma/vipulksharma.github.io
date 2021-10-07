@@ -18,7 +18,7 @@ export default class Product extends Component {
              
         if (ios && !standalone && !safari) {
             return 'iOS';
-        } else if (/android/i.test(userAgent) && isAndroidWebView) {
+        } else if (/android/i.test(userAgent)) {
             return 'Android';
         } else {
             return 'unknown';
@@ -43,9 +43,6 @@ export default class Product extends Component {
         })
     }
 
-    // On back button press or home button press in app toggle pip
-
-
     checkLogin = () => {
         if (!this.state.login) {
             if (ReactPlayer.canEnablePIP(this.state.url)) {
@@ -55,16 +52,15 @@ export default class Product extends Component {
                     //call android bridge to enable pip
                     if (window["app"]) {
                         window["app"].tiketTogglePIP(true);
-                        // window["JSBridge"].call('ticketTogglePIP', {enablePIP: true}, function(e) {
-                        //     console.log(e);
-                        // })
-                    } else {
+                    }else {
                         alert('bridge not found');
                     }
                 } else {
                     this.handleTogglePIP();
                 }
             }
+            
+            
             if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
                 window.location.href = 'https://m.tiket.com/login';
                 // App to intercept this call and check login and get login done and return event which we use to fetch username.
@@ -75,6 +71,8 @@ export default class Product extends Component {
             //     // based on event data from app call login api to get user details.
             //     this.handleDisablePIP();
             // });            
+        } else if (this.getMobileOperatingSystem() === 'unknown'){
+            this.handleTogglePIP();
         }
     }
 
@@ -86,10 +84,10 @@ export default class Product extends Component {
       <div className="wrapper">
         <ReactPlayer 
             url={url} 
-            playing={!!url} 
-            playsinline={!!true}
-            pip={!!pip} 
+            pip={pip} 
+            playing 
             loop={true}
+            playsinline={true} 
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
             stopOnUnmount={false} />
