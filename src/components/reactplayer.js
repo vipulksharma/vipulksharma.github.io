@@ -63,6 +63,7 @@ export default class Product extends Component {
             
             if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
                 window.location.href = 'https://m.tiket.com/login';
+                // App to intercept this call and check login and get login done and return event which we use to fetch username.
             }
             // window.addEventListener('message', (event) => {
             //     alert(`Received message: ${event.data}`);
