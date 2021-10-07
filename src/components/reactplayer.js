@@ -18,7 +18,7 @@ export default class Product extends Component {
              
         if (ios && !standalone && !safari) {
             return 'iOS';
-        } else if (/android/i.test(userAgent) && isAndroidWebView) {
+        } else if (/android/i.test(userAgent)) {
             return 'Android';
         } else {
             return 'unknown';
