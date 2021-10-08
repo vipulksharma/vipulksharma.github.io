@@ -77,13 +77,12 @@ export default class ReactPlayerDemo extends Component {
             if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.handleTogglePIP();
             } else {
-                alert('here1');
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
-                    alert('here2');
                     if (window["app"]) {
                         window["app"].tiketTogglePIP(false);
                     } 
+                    this.handleTogglePIP();
                 } 
             }
         });            
