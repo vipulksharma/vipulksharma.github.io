@@ -7,10 +7,11 @@ export default class ReactPlayerDemo extends Component {
         pip: false,
         url: "https://dawchihliou.github.io/react-use-pip/video-sample.mp4",
         login: false,
+        playing: true,
     } 
     componentDidMount() {
         window.addEventListener('TL_NATIVE_BUTTON_PRESS', (event) => {
-            if (event && event.detail && event.detail.isPIP) {
+            if (event && event.detail && event.detail.isPIP && ReactPlayer.canEnablePIP(this.state.url)) {
                 this.handleTogglePIP();
             }
         });
@@ -52,13 +53,13 @@ export default class ReactPlayerDemo extends Component {
     }
 
     checkLogin = () => {
-        if (sessionStorage.token) {
-            //fetch login username
-            // if login details met show
-            // If not clear localstorage and fetch the function again.
-            alert('user is already logged in');
-            return;
-        }
+        // if (sessionStorage.token) {
+        //     //fetch login username
+        //     // if login details met show
+        //     // If not clear localstorage and fetch the function again.
+        //     alert('user is already logged in');
+        //     return;
+        // }
         if (ReactPlayer.canEnablePIP(this.state.url)) {
             this.handleTogglePIP();
         } else {
@@ -92,16 +93,19 @@ export default class ReactPlayerDemo extends Component {
         });            
     }
 
+     
+
+
 
     
   render() {
-    const {url, pip} = this.state;
+    const {url, pip, playing} = this.state;
     return(
       <div className="wrapper">
         <ReactPlayer 
             url={url} 
             pip={!!pip} 
-            playing
+            playing={playing}
             onEnablePIP={this.handleEnablePIP} 
             onDisablePIP={this.handleDisablePIP} 
             stopOnUnmount={false} 
