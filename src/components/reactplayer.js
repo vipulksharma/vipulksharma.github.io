@@ -14,7 +14,7 @@ export default class ReactPlayerDemo extends Component {
             userAgent = window.navigator.userAgent.toLowerCase() || navigator.vendor.toLowerCase(),
             safari = /safari/.test( userAgent ),
             ios = /iphone|ipod|ipad/.test( userAgent ),
-            isAndroidWebView = window.hasOwnProperty('Android');
+            isAndroidWebView = window.hasOwnProperty('app');
              
         if (ios && !standalone && !safari) {
             return 'iOS';
@@ -39,47 +39,60 @@ export default class ReactPlayerDemo extends Component {
 
     handleDisablePIP = () => {
         this.setState({
-            pip: false
-        })
+            pip: false,
+        })        
     }
 
     checkLogin = () => {
-        if (!this.state.login) {
+        if (sessionStorage.token) {
+            //fetch login username
+            // if login details met show
+            // If not clear localstorage and fetch the function again.
+            alert('user is already logged in');
+            return;
+        }
+        if (ReactPlayer.canEnablePIP(this.state.url)) {
+            this.handleTogglePIP();
+        } else {
+            if (this.getMobileOperatingSystem() === 'Android'){
+                //call android bridge to enable pip
+                if (window["app"]) {
+                    window["app"].tiketTogglePIP(true);
+                }
+            } else {
+                this.handleTogglePIP();
+            }
+        }
+        
+        
+        if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
+            window.location.href = 'https://m.tiket.com/login';
+            // App to intercept this call and check login and get login done and return event which we use to fetch username.
+        }
+        window.addEventListener('TL_SET_TOKEN', (event) => {
+            // if logged in
+            // based on event data from app call login api to get user details.
+            sessionStorage.token = event.detail.token;
+            // Call local login api
             if (ReactPlayer.canEnablePIP(this.state.url)) {
                 this.handleTogglePIP();
             } else {
+                alert('here1');
                 if (this.getMobileOperatingSystem() === 'Android'){
                     //call android bridge to enable pip
+                    alert('here2');
                     if (window["app"]) {
-                        window["app"].tiketTogglePIP(true);
-                    }else {
-                        alert('bridge not found');
-                    }
-                } else {
-                    this.handleTogglePIP();
-                }
+                        window["app"].tiketTogglePIP(false);
+                    } 
+                } 
             }
-            
-            
-            if (this.getMobileOperatingSystem() === 'iOS' || this.getMobileOperatingSystem() === 'Android') {
-                window.location.href = 'https://m.tiket.com/login';
-                // App to intercept this call and check login and get login done and return event which we use to fetch username.
-            }
-            window.addEventListener('TL_SET_TOKEN', (event) => {
-                alert(`Received message: ${event.data}`);
-                // if logged in
-                // based on event data from app call login api to get user details.
-                this.handleDisablePIP();
-            });            
-        } else if (this.getMobileOperatingSystem() === 'unknown'){
-            this.handleTogglePIP();
-        }
+        });            
     }
 
 
     
   render() {
-      const {url, pip} = this.state;
+    const {url, pip} = this.state;
     return(
       <div className="wrapper">
         <ReactPlayer 
@@ -90,15 +103,13 @@ export default class ReactPlayerDemo extends Component {
             onDisablePIP={this.handleDisablePIP} 
             stopOnUnmount={false} 
             playsinline={true}
-            config={{
-                file: {
-                  // NOTE: Forcing HLS makes the stream to not work on iOS devices.
-                  // forceHLS: true,
-                  forceVideo: true,}}}
-                  />
+        />
         <button onClick={this.checkLogin}>{
             pip ? 'Disable PIP' : 'Enable PIP'
         }</button>
+        {
+            sessionStorage.token && <div>User logged in already</div>
+        }
       </div>
     )
   }
