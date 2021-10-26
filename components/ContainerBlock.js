@@ -28,6 +28,9 @@ export default function ContainerBlock({ children, ...customMeta }) {
           rel="canonical"
           href={`https://vipul-sharma.in${router.asPath}`}
         />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
+        <meta name="theme-color" content="#fff" />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Vipul Sharma" />
         <meta property="og:description" content={meta.description} />
@@ -38,6 +41,7 @@ export default function ContainerBlock({ children, ...customMeta }) {
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
+        
         {meta.date && (
           <meta property="article:published_time" content={meta.date} />
         )}
