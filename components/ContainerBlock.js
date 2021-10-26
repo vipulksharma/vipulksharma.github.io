@@ -29,7 +29,7 @@ export default function ContainerBlock({ children, ...customMeta }) {
           href={`https://vipul-sharma.in${router.asPath}`}
         />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
+        <link rel="apple-touch-icon" href="/512.png"></link>
         <meta name="theme-color" content="#fff" />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Vipul Sharma" />
