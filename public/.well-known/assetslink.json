@@ -8,6 +8,18 @@
         "namespace": "web",
              "site": "https://vipul-sharma.in"
         }
-    }
+    },
+    {
+        "relation": [
+        "delegate_permission/common.handle_all_urls",
+        ],
+        "target": {
+        "namespace": "android_app",
+        "package_name": "in.vipul_sharma.twa",
+        "sha256_cert_fingerprints": [
+        "CC:41:E7:D3:C3:8A:19:B7:84:B8:D1:F4:ED:2C:8B:C0:CD:74:7D:C9:95:49:AF:BF:AF:98:69:CB:5B:B2:68:B9"
+        ]
+        }
+        }
     
 ]
