@@ -15,8 +15,11 @@ export default class ReactPlayerDemo extends Component {
                 this.handleTogglePIP();
             }
         });
+
+        window.addEventListener('popstate', (event) => {
+            alert('The Version doesn support bridge', JSON.stringify(event.state));
+        });
     }
-    
 
     getMobileOperatingSystem = () => {
         let standalone = window.navigator.standalone,
@@ -51,6 +54,7 @@ export default class ReactPlayerDemo extends Component {
             pip: false,
         })        
     }
+
 
     checkLogin = () => {
         // if (sessionStorage.token) {
