@@ -61,6 +61,13 @@ const userData = {
   },
   experience: [
     {
+      title: "Head Of Engineering",
+      company: "Tiket.com",
+      year: "2021",
+      companyLink: "https://wwww.tiket.com",
+      desc: "As head of engineering, frontend handling consumer side of tiket.com",
+    },
+    {
       title: "Tech Lead + Senior Tech Lead",
       company: "Paytm",
       year: "2018",
