@@ -3,8 +3,8 @@ const userData = {
   name: "Vipul Sharma",
   designation: "Frontend Architect",
   avatarUrl: "/avatar.png",
-  email: "panditsfire@gmail.com",
-  phone: "+91 9015713889",
+  email: "",
+  phone: "",
   address: "Noida, UP, India.",
   projects: [
     {
